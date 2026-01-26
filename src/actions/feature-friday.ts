@@ -58,7 +58,7 @@ export class FeatureFridayLauncher extends SingletonAction<FeatureFridaySettings
 		const showAvatar = settings.testerAvatar
 		if (showAvatar === true || showAvatar === undefined) {
 			switch (settings.tester) {
-				case "HQCrew":
+				case "HQ Crew":
 					await action.setImage("imgs/actions/feature-friday/avatars/hq.png");
 					break;
 				case "MobileScrap":

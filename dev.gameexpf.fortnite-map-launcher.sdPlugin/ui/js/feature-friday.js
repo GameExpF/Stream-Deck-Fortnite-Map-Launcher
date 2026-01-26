@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.log("didReceiveSettings", jsonObj)
             const settings = jsonObj.payload.settings;
             if (featureFridayData && settings.mapCode && settings.tester) {
-                const testerMaps = featureFridayData.maps.filter(m => m.tester === settings.tester);
+                const testerMaps = featureFridayData.maps.filter(m => m.teamLeader === settings.tester);
                 const index = testerMaps.findIndex(m => m.code === settings.mapCode);
                 if (index !== -1) {
                     const newIndex = index + 1;
@@ -113,12 +113,12 @@ function updateMapList(tester) {
     if (!featureFridayData) return;
     console.log(`updateMapList ${tester}`)
     const mapSelect = document.getElementById('map-select');
-    const maps = featureFridayData.maps.filter(m => m.tester === tester);
+    const maps = featureFridayData.maps.filter(m => m.teamLeader === tester);
     mapSelect.innerHTML = '<option value="none">None</option>';
     maps.forEach((m, ind) => {
         const opt = document.createElement('option');
         opt.value = ind + 1;
-        opt.innerText = `${m.code}: ${m.name}`;
+        opt.innerText = `${m.code}: ${m.title}`;
         mapSelect.appendChild(opt);
     });
 }
