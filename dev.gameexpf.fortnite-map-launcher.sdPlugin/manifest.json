@@ -1,0 +1,64 @@
+{
+	"Name": "Fortnite Map Launcher",
+	"Version": "0.1.0.0",
+	"Author": "GameExpF",
+	"Actions": [
+		{
+			"Name": "Map Launch",
+			"UUID": "dev.gameexpf.fortnite-map-launcher.launch",
+			"Icon": "imgs/actions/map-launcher/fortnite2",
+			"Tooltip": "Launches the selected island in Fortnite",
+			"PropertyInspectorPath": "ui/map-launcher.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/map-launcher/fortnite",
+					"TitleAlignment": "middle"
+				}
+			]
+		},
+		{
+			"Name": "FCHQ Feature Friday Map Launch",
+			"UUID": "dev.gameexpf.fortnite-map-launcher.fchqfflaunch",
+			"Icon": "imgs/actions/feature-friday/fchq2",
+			"Tooltip": "Launches the selected island submitted for the current Feature Friday week",
+			"PropertyInspectorPath": "ui/feature-friday.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/feature-friday/fchq",
+					"TitleAlignment": "middle",
+					"FontSize": 20.0
+				}
+			]
+		}
+	],
+	"Category": "Fortnite Map Launcher",
+	"CategoryIcon": "imgs/plugin/category-icon",
+	"CodePath": "bin/plugin.js",
+	"Description": "Launch your favorite fortnite maps from your Stream Deck",
+	"Icon": "imgs/plugin/marketplace",
+	"SDKVersion": 3,
+	"Software": {
+		"MinimumVersion": "6.9"
+	},
+	"OS": [
+		{
+			"Platform": "mac",
+			"MinimumVersion": "12"
+		},
+		{
+			"Platform": "windows",
+			"MinimumVersion": "10"
+		}
+	],
+	"Nodejs": {
+		"Version": "20",
+		"Debug": "enabled"
+	},
+	"UUID": "dev.gameexpf.fortnite-map-launcher"
+}

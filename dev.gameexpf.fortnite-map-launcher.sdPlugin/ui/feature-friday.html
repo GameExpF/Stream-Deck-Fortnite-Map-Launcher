@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <title>Feature Friday Settings</title>
+    <meta charset="utf-8" />
+    <!-- <script src="https://sdpi-components.dev/releases/v4/sdpi-components.js"></script> -->
+    <script src="js/sdpi-components.js"></script>
+</head>
+
+<body>
+    <!--
+        Learn more about property inspector components at https://sdpi-components.dev/docs/components
+    -->
+    <sdpi-item label="Title Format">
+        <sdpi-select setting="titleFormat" default="index">
+            <option value="none">None</option>
+            <option value="index">Index</option>
+            <!-- <option value="name">Map Name</option> -->
+            <option value="code">Map Code</option>
+        </sdpi-select>
+    </sdpi-item>
+    <sdpi-item label="Select the tester">
+        <sdpi-select setting="tester" id="tester-select" default="none">
+            <!-- Options will be populated dynamically -->
+        </sdpi-select>
+        <sdpi-checkbox setting="testerAvatar" label="Show tester's avatar" default="true"></sdpi-checkbox>
+    </sdpi-item>
+    <sdpi-item label="Select the map">
+        <sdpi-select setting="mapIndex" id="map-select" default="none">
+            <option value="none">None</option>
+            <!-- Options will be populated dynamically -->
+        </sdpi-select>
+        <sdpi-checkbox setting="localPC" label="Launch on this PC" default="true"></sdpi-checkbox>
+        <sdpi-button id="refresh-btn">Refresh the list</sdpi-button>
+        <span id="week-display">Week #...</span>
+    </sdpi-item>
+    <sdpi-item>
+        <sdpi-checkbox setting="isComplete" label="Mark the map as complete (Hold the key to switch)"></sdpi-checkbox>
+    </sdpi-item>
+</body>
+
+<script src="js/feature-friday.js"></script>
+
+</html>
