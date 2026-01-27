@@ -11,6 +11,13 @@
     <!--
         Learn more about property inspector components at https://sdpi-components.dev/docs/components
     -->
+    <sdpi-item label="Image Position">
+        <sdpi-select setting="imagePosition" default="center">
+            <option value="left">Left</option>
+            <option value="center">Center</option>
+            <option value="right">Right</option>
+        </sdpi-select>
+    </sdpi-item>
     <sdpi-item label="Title Format">
         <sdpi-select setting="titleFormat" default="none">
             <option value="none">None</option>
@@ -19,20 +26,17 @@
         </sdpi-select>
     </sdpi-item>
     <sdpi-item label="Map Name">
-        <sdpi-textfield setting="mapName"></sdpi-textfield>
-        <!-- The map name can be pulled automatically using the Load Map Info button. -->
+        <sdpi-textarea setting="mapName"></sdpi-textarea>
+        The map name can be pulled automatically using the Load Map Info button.
     </sdpi-item>
     <sdpi-item label="Map Code">
         <sdpi-textfield setting="mapCode" placeholder="1234-1234-1234" pattern="\d{4}-\d{4}-\d{4}" required></sdpi-textfield>
         <sdpi-checkbox setting="localPC" label="Launch on this PC" default="true"></sdpi-checkbox>
     </sdpi-item>
-    <!-- <sdpi-item>
+    <sdpi-item>
         <sdpi-button id="load-map-info" disabled="true">Load Map Info</sdpi-button>
-    </sdpi-item> -->
-    <!-- <sdpi-item>
-        <sdpi-button id="connect-api">Connect to fortniteapi.io</sdpi-button>
-        This is not required, as the API will only fetch the map's name and thumbnail. You can launch them without connection.
-    </sdpi-item> -->
+        <sdpi-button id="reset-map-img">Reset Map Image</sdpi-button>
+    </sdpi-item>
 </body>
 
 <script src="js/map-launcher.js"></script>

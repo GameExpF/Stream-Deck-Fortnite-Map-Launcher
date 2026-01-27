@@ -1,9 +1,6 @@
 import streamDeck, { action, DidReceiveSettingsEvent, KeyDownEvent, KeyUpEvent, SendToPluginEvent, SingletonAction, WillAppearEvent } from "@elgato/streamdeck";
 import { exec } from 'child_process';
 
-/**
- * An example action class that displays a count that increments by one each time the button is pressed.
- */
 @action({ UUID: "dev.gameexpf.fortnite-map-launcher.fchqfflaunch" })
 export class FeatureFridayLauncher extends SingletonAction<FeatureFridaySettings> {
 	private _keyDownMap = new Map<string, number>();
@@ -13,10 +10,6 @@ export class FeatureFridayLauncher extends SingletonAction<FeatureFridaySettings
 		await this.updateTesterImage(ev.action, ev.payload.settings);
 		await this.updateKeyName(ev.action, ev.payload.settings);
 	}
-
-	// override async onSendToPlugin(ev: SendToPluginEvent<any, any>) {
-		
-	// }
 
 	override async onWillAppear(ev: WillAppearEvent<FeatureFridaySettings>): Promise<void> {
 		const { settings } = ev.payload;

@@ -1,18 +1,30 @@
 import streamDeck, { action, DidReceiveSettingsEvent, KeyDownEvent, SendToPluginEvent, SingletonAction, WillAppearEvent } from "@elgato/streamdeck";
 import { exec } from 'child_process';
+import { Jimp } from "jimp";
 
-/**
- * An example action class that displays a count that increments by one each time the button is pressed.
- */
 @action({ UUID: "dev.gameexpf.fortnite-map-launcher.launch" })
 export class MapLauncher extends SingletonAction<LauncherSettings> {
-	override async onDidReceiveSettings(ev: DidReceiveSettingsEvent<LauncherSettings>): Promise<void> {
-		await this.updateMapImage(ev.action, ev.payload.settings);
-		await this.updateKeyName(ev.action, ev.payload.settings);
-	}
 
-	override async onSendToPlugin(ev: SendToPluginEvent<any, any>) {
+	override async onSendToPlugin(ev: SendToPluginEvent<any, LauncherSettings>) {
 		streamDeck.logger.info(ev.payload)
+		switch (ev.payload.command) {
+			case "updateMapInfo":
+				var info = await ev.action.getSettings();
+				info.mapName = ev.payload.payload.map.title;
+				info.mapData = ev.payload.payload.map;
+				await ev.action.setSettings(info);
+				await this.updateKeyName(ev.action, info);
+				await this.updateMapImage(ev.action, info);
+				break;
+			case "resetMapImg":
+				var info = await ev.action.getSettings();
+				info.mapData = undefined;
+				await ev.action.setSettings(info);
+				await ev.action.setImage("imgs/actions/map-launcher/fortnite.png");
+				break;
+			default:
+				break;
+		}
 	}
 
 	override async onWillAppear(ev: WillAppearEvent<LauncherSettings>): Promise<void> {
@@ -42,7 +54,18 @@ export class MapLauncher extends SingletonAction<LauncherSettings> {
 	}
 
 	private async updateMapImage(action: any, settings: LauncherSettings): Promise<void> {
-		await action.setImage("imgs/actions/map-launcher/fortnite.png");
+		var mapImg = settings.mapData?.epicImageUrl || "";
+		if (mapImg.length === 0) {
+			return await action.setImage("imgs/actions/map-launcher/fortnite.png");
+		} else {
+			try {
+				const base64Image = await this.getSquareImage(mapImg, settings);
+				await action.setImage(base64Image);
+			} catch (error) {
+				streamDeck.logger.error("Failed to set image:", error);
+				await action.showAlert();
+			}
+		}
 	}
 
 	override async onKeyDown(ev: KeyDownEvent<LauncherSettings>): Promise<void> {
@@ -74,8 +97,39 @@ export class MapLauncher extends SingletonAction<LauncherSettings> {
 		}
 	}
 
-	private async refreshMapData() {
-		streamDeck.logger.info("Refreshing map data");
+	private async getSquareImage(url: string, settings: LauncherSettings): Promise<string> {
+		try {
+			const image = await Jimp.read(url);
+
+			let hValue;
+
+			const alignment = settings.imagePosition || "center";
+			switch (alignment) {
+				case ("left"):
+					hValue = ALIGN.LEFT;
+					break;
+				case ("right"):
+					hValue = ALIGN.RIGHT;
+					break;
+				case ("center"):
+					hValue = ALIGN.CENTER;
+					break;
+				default:
+					hValue = ALIGN.CENTER;
+					break;
+			}
+			image.cover({
+				w: 144,
+				h: 144,
+				align: hValue
+			}
+			);
+			const base64 = await image.getBase64("image/png");
+			return base64;
+		} catch (error) {
+			console.error("Jimp error:", error);
+			throw error;
+		}
 	}
 }
 
@@ -85,4 +139,24 @@ type LauncherSettings = {
 	localPC?: boolean;
 	titleFormat?: string;
 	isConnected?: boolean;
+	imagePosition?: string;
+	mapData?: mapData;
+};
+
+type MapUpdateData = {
+	command?: string;
+	payload: {
+		map: mapData;
+	}
+};
+
+type mapData = {
+	title: string;
+	epicImageUrl: string;
+};
+
+const ALIGN = {
+	LEFT:   1 << 0,
+	CENTER: 1 << 1,
+	RIGHT:  1 << 2,
 };

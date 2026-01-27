@@ -10,7 +10,6 @@ function validateMapCode() {
         rawValue = internalInput ? internalInput.value : "";
     }
 
-    // 3. Process the text
     let digits = rawValue.replace(/\D/g, '');
     
     if (digits.length > 12) {
@@ -34,17 +33,45 @@ document.addEventListener('DOMContentLoaded', () => {
             field.addEventListener('input', validateMapCode);
             validateMapCode();
         }
-        // const load_btn = document.getElementById('load-map-info');
-        // if (load_btn) {
-        //     load_btn.addEventListener('click', () => {
-        //         streamDeckClient.SendToPlugin({"action": "refreshMapData"});
-        //     });
-        // }
-        // const con_btn = document.getElementById('connect-api');
-        // if (con_btn) {
-        //     con_btn.addEventListener('click', () => {
-                
-        //     });
-        // }
+        const load_btn = document.getElementById('load-map-info');
+        if (load_btn) {
+            load_btn.addEventListener('click', () => {
+                if (field.value.length === 14) {
+                    fetch(`https://fchq.io/api/map/${field.value}`)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! Status: ${response.status}`);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log(data);
+                            const $SD = streamDeckClient;
+                            if ($SD) {
+                                $SD.send("sendToPlugin", {
+                                    command: "updateMapInfo",
+                                    payload: data
+                                })
+                            }
+                        })
+                        .catch(err => {
+                            console.error("Failed to fetch data", err);
+                        })
+                        .finally(() => {
+                        })
+                }
+            });
+        }
+        const reset = document.getElementById('reset-map-img');
+        if (reset) {
+            reset.addEventListener('click', () => {
+                const $SD = streamDeckClient;
+                if ($SD) {
+                    $SD.send("sendToPlugin", {
+                        command: "resetMapImg"
+                    })
+                }
+            });
+        }
     }, 100);
 });

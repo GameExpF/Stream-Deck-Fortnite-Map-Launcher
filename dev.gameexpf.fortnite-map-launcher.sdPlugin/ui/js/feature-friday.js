@@ -29,7 +29,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             isLoadingData = true;
             refreshBtn.disabled = true;
             fetch('https://www.olilz.xyz/api/playtests/maps')
-            // fetch('http://127.0.0.1:5000/feature-friday/current')
                 .then(response => {
                     if (!response.ok) {
                         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -99,7 +98,6 @@ function updateUI() {
         opt.innerText = t;
         testerSelect.appendChild(opt);
     });
-    // Add the currently selected tester if not in the list
     if (testerSelect.value !== 'none' && !testers.includes(testerSelect.value)) {
         const opt = document.createElement('option');
         opt.value = testerSelect.value;
