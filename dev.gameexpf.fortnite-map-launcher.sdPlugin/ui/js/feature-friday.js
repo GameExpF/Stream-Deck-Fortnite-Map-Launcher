@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         refreshBtn.addEventListener('click', () => {
             isLoadingData = true;
             refreshBtn.disabled = true;
-            fetch('https://www.olilz.xyz/api/playtests/maps')
+            fetch('https://api.olilz.xyz/playtesting/current/maps')
                 .then(response => {
                     if (!response.ok) {
                         throw new Error(`HTTP error! Status: ${response.status}`);
