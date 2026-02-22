@@ -38,10 +38,10 @@
 		}
 	],
 	"Category": "Fortnite Map Launcher",
-	"CategoryIcon": "imgs/plugin/category-icon",
+	"CategoryIcon": "imgs/actions/map-launcher/fortnite2",
 	"CodePath": "bin/plugin.js",
 	"Description": "Launch your favorite fortnite maps from your Stream Deck",
-	"Icon": "imgs/plugin/marketplace",
+	"Icon": "imgs/actions/map-launcher/fortnite2",
 	"SDKVersion": 3,
 	"Software": {
 		"MinimumVersion": "6.9"

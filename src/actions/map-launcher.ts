@@ -6,7 +6,6 @@ import { Jimp } from "jimp";
 export class MapLauncher extends SingletonAction<LauncherSettings> {
 
 	override async onSendToPlugin(ev: SendToPluginEvent<any, LauncherSettings>) {
-		streamDeck.logger.info(ev.payload)
 		switch (ev.payload.command) {
 			case "updateMapInfo":
 				var info = await ev.action.getSettings();
@@ -21,6 +20,9 @@ export class MapLauncher extends SingletonAction<LauncherSettings> {
 				info.mapData = undefined;
 				await ev.action.setSettings(info);
 				await ev.action.setImage("imgs/actions/map-launcher/fortnite.png");
+				break;
+			case "updateApp":
+				await streamDeck.system.openUrl("https://github.com/GameExpF/Stream-Deck-Fortnite-Map-Launcher/releases/latest");
 				break;
 			default:
 				break;

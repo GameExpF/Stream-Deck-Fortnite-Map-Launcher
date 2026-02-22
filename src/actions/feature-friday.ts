@@ -17,6 +17,16 @@ export class FeatureFridayLauncher extends SingletonAction<FeatureFridaySettings
 		await this.updateKeyName(ev.action, settings);
 	}
 
+	override async onSendToPlugin(ev: SendToPluginEvent<any, FeatureFridaySettings>) {
+		switch (ev.payload.command) {
+			case "updateApp":
+				await streamDeck.system.openUrl("https://github.com/GameExpF/Stream-Deck-Fortnite-Map-Launcher/releases/latest");
+				break;
+			default:
+				break;
+		}
+	}
+
 	private async updateKeyName(action: any, settings: FeatureFridaySettings): Promise<void> {
 		let globalSettings : GlobalSettings = await streamDeck.settings.getGlobalSettings();
 		const titleFormat = settings.titleFormat || "index";

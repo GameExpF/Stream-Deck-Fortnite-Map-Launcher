@@ -1,4 +1,4 @@
-const { streamDeckClient } = SDPIComponents;
+// const { streamDeckClient } = SDPIComponents;
 
 let featureFridayData = null;
 

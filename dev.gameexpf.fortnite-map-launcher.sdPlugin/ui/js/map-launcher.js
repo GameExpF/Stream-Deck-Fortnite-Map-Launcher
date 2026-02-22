@@ -1,4 +1,4 @@
-const { streamDeckClient } = SDPIComponents;
+// const { streamDeckClient } = SDPIComponents;
 
 function validateMapCode() {
     const field = document.querySelector('sdpi-textfield[setting="mapCode"]');
